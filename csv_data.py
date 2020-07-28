@@ -26,6 +26,9 @@ emails_general_email2 = dataGeneral.email2.tolist()
 #DEFINIENDO LAS LISTAS A LLENAR CON LOS DATOS REQUERIDOS
 emails_no_enviados  = []
 Data_general_no_enviada = [[],[],[],[]]
+emails_si_enviados  = []
+Data_general_si_enviada = [[],[],[],[]]
+
 
 #RECORRIENDO LAS LISTAS PARA COMPARAR
 for i in range(len(emails_enviados)):
@@ -39,7 +42,8 @@ for i in range(len(emails_todos)):
 for i in range(len(emails_todos)):
     if emails_todos[i] in emails_enviados:
         #print ("COINCIDENCIA")
-       pass
+       #pass
+       emails_si_enviados.append(emails_todos[i])
     else:
        # print ("NO COINCIDEN")
         emails_no_enviados.append(emails_todos[i])
@@ -62,6 +66,20 @@ for i in range(len(emails_general_email2)):
         Data_general_no_enviada[3].append(emails_general_email2[i])
         contador += 1
 
+#Este contador mide el numero de filas que habra en la lista para el for siguiente
+contador2 = 0
+for i in range(len(emails_general_email2)):
+    if emails_general_email2[i] in emails_si_enviados:
+        #print(emails_general_nemp[i])
+        Data_general_si_enviada[0].append(emails_general_nemp[i])
+        #print(emails_general_employee_name[i])
+        Data_general_si_enviada[1].append(emails_general_employee_name[i])
+        #print(emails_general_email1[i])
+        Data_general_si_enviada[2].append(emails_general_email1[i])
+        #print(emails_general_email2[i])
+        Data_general_si_enviada[3].append(emails_general_email2[i])
+        contador2 += 1
+
 for i in range(contador):
     pass
     #print(Data_general_no_enviada[0][i], " ",Data_general_no_enviada[1][i], " ", Data_general_no_enviada[2][i], " ", Data_general_no_enviada[3][i] )
@@ -72,10 +90,15 @@ for i in range(contador):
 
 #TRANSPONEMOS LA MATRIZ, PORQUE SALE VOLTEADA
 a_transponer = np.array(Data_general_no_enviada)
-b_transpuesta = a.transpose()
+b_transpuesta = a_transponer.transpose()
 
-print(b_transpuesta)
+c_transponer = np.array(Data_general_si_enviada)
+d_transpuesta = c_transponer.transpose()
+#print(b_transpuesta)
 
 #CONVERTIMOS A CSV LA MATRIZ TRANSPUESTA
 df = pandas.DataFrame(b_transpuesta)
-df.to_csv('list.csv', index=False)
+df.to_csv('listNoEnviados.csv', index=False)
+
+df2 = pandas.DataFrame(d_transpuesta)
+df2.to_csv('listEnviados.csv', index=False)
